@@ -49,12 +49,12 @@ var cardsInPlay = [];
 var wins = 0;
 
 // Total flips counter
-var totalFlipCount = 15;
+var totalFlipCount = 20;
 
 //Function to display no. of tries left in alert board
 var tryCounterDisplay = function (totalFlipCount) {
 	var tryCounter = document.createElement('p');
-	tryCounter.textContent = "No. of tries left: " + totalFlipCount;
+	tryCounter.textContent = "No. of flips left: " + totalFlipCount;
 	return tryCounter;
 }
 
@@ -97,7 +97,7 @@ var resetBoard = function () {
 	}
 	var currentDeck = createBoard();
 	console.log("Current deck:" + currentDeck);
-	totalFlipCount = 15;
+	totalFlipCount = 20;
 	alertNeutral(totalFlipCount);
 	wins = 0;
 	
@@ -140,7 +140,7 @@ var checkForMatch = function (totalFlipCount) {
 		// alertBoard.innerHTML = "<h1>Sorry, try again</h1>";
 		var tryCounter = tryCounterDisplay(totalFlipCount);
 		alertBoard.appendChild(tryCounter);
-		hideBoard();
+		setTimeout(hideBoard, 500);
 		wins = 0;
 		console.log("Score:" + wins)
 	}	
@@ -232,7 +232,7 @@ var getShuffledDeck = function (test) {
 
 
 var createBoard = function () {
-	var shuffledDeck = getShuffledDeck(true);
+	var shuffledDeck = getShuffledDeck(false);
 	for (var i = 0; i < cards.length; i++){
 		var cardElement = document.createElement('img');
 		cardElement.setAttribute('src', "images/back.png");

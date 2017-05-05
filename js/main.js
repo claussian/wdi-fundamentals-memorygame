@@ -102,7 +102,7 @@ var checkForMatch = function () {
 		// alert("Sorry, try again.");
 		alertBoard.style.backgroundColor = "#00A6B3";
 		alertBoard.innerHTML = "<h1>Sorry, try again</h1>";
-		hideBoard();
+		setTimeout(hideBoard, 500);
 		wins = 0;
 		console.log("Score:" + wins)
 	}	
@@ -178,7 +178,7 @@ var getShuffledDeck = function (test) {
 
 
 var createBoard = function () {
-	var shuffledDeck = getShuffledDeck(true);
+	var shuffledDeck = getShuffledDeck(false);
 	for (var i = 0; i < cards.length; i++){
 		var cardElement = document.createElement('img');
 		cardElement.setAttribute('src', "images/back.png");
