@@ -53,6 +53,13 @@ main{
 	width: 850px;
 	margin: 35px auto;
 }
+#alert-board{
+	background-color: #6E7B8B;
+	width: 50%;
+	margin: 20px auto;
+	padding: 10px 10px;
+	color: #FFFFFF;
+}
 footer{
 	text-transform: uppercase;
 	padding: 0 20px;
