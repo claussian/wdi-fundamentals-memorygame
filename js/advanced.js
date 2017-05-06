@@ -49,7 +49,7 @@ var cardsInPlay = [];
 var wins = 0;
 
 // Total flips counter
-var totalFlipCount = 20;
+var totalFlipCount = 16;
 
 //Function to display no. of tries left in alert board
 var tryCounterDisplay = function (totalFlipCount) {
@@ -76,6 +76,7 @@ var hideBoard = function () {
 		children[i].setAttribute('src', "images/back.png");
 		children[i].setAttribute('face', 0);
 	}
+	currentDeck = copyDeck; // reset unplayed deck back to original
 }
 
 // Neutral alert board
@@ -95,12 +96,13 @@ var resetBoard = function () {
 	while (children.length > 0) {
 		document.getElementById('game-board').removeChild(children[0]);
 	}
-	var currentDeck = createBoard();
+	currentDeck = createBoard();
+	copyDeck = currentDeck;
 	console.log("Current deck:" + currentDeck);
-	totalFlipCount = 20;
+	totalFlipCount = 16;
 	alertNeutral(totalFlipCount);
 	wins = 0;
-	
+	cardsInPlay = [];
 }
 
 // Function to check for match; nested in flipCard
@@ -162,7 +164,7 @@ var flipCard = function () {
 			face: flipCount
 		});
 		// console.log("Cards in play:" + cardsInPlay.length)
-		// Ensure that a different card is clicked to score a match & at least one of the cards is new
+		// Ensure that a different card is clicked to score a match & at least one of the cards is unplayed
 		if (cardsInPlay.length === 2 && cardsInPlay[0].id != cardsInPlay[1].id && Math.min(cardsInPlay[0].face, cardsInPlay[1].face) === 1) {
 			checkForMatch(totalFlipCount);
 			console.log("Cards in play: " + cardsInPlay[0].rank + ", " + cardsInPlay[1].rank)
@@ -172,7 +174,7 @@ var flipCard = function () {
 			alertNeutral(totalFlipCount);
 			console.log("Cards in play: " + cardsInPlay[0].rank)
 		}
-		else {
+		else { // at least one of the cards has been played before
 			var checkPlayedCard = currentDeck.indexOf(Number(cardsInPlay[1].id)) // check if most recent card is unplayed, if same card retain the later one
 			if (checkPlayedCard > -1) { 
 				cardsInPlay.shift(); // retain the unplayed card
@@ -184,7 +186,7 @@ var flipCard = function () {
 					cardsInPlay.pop(); // retain the unplayed card
 					console.log("Cards in play: " + cardsInPlay[0].rank);
 				}
-				else {
+				else { // both cards played before
 					cardsInPlay = [];
 					console.log("Cards in play: " + cardsInPlay);
 				}
@@ -198,9 +200,9 @@ var flipCard = function () {
 	else {
 		var alertBoard = document.getElementById('alert-board');
 		alertBoard.style.backgroundColor = "#000000";
-		var messageOutOfLuck = messageDisplay(alertBoard, 'h1', "You've run out of tries! Reset?");
+		var messageOutOfLuck = messageDisplay(alertBoard, 'h1', "You've run out of flips! Reset?");
 		alertBoard.appendChild(messageOutOfLuck);
-		// alertBoard.innerHTML = "<h1>You've run out of tries! Reset?</h1>";
+		// alertBoard.innerHTML = "<h1>You've run out of flips! Reset?</h1>";
 		var tryCounter = tryCounterDisplay(totalFlipCount);
 		alertBoard.appendChild(tryCounter);
 		alertBoard.addEventListener('click', resetBoard);
@@ -245,4 +247,5 @@ var createBoard = function () {
 }
 
 var currentDeck = createBoard();
+var copyDeck = currentDeck; // create copy to reset deck when board is hidden
 console.log("Current deck:" + currentDeck);

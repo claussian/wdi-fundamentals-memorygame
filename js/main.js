@@ -55,6 +55,7 @@ var hideBoard = function () {
 		children[i].setAttribute('src', "images/back.png");
 		children[i].setAttribute('face', 0);
 	}
+	currentDeck = copyDeck;
 }
 
 // Neutral alert board
@@ -70,10 +71,12 @@ var resetBoard = function () {
 	while (children.length > 0) {
 		document.getElementById('game-board').removeChild(children[0])
 	}
-	var currentDeck = createBoard();
+	currentDeck = createBoard();
+	copyDeck = currentDeck;
 	console.log("Current deck:" + currentDeck);
 	alertNeutral();
 	wins = 0;
+	cardsInPlay = [];
 }
 
 // Function to check for match; nested in flipCard
@@ -131,7 +134,7 @@ var flipCard = function () {
 		alertNeutral();
 		console.log("Cards in play: " + cardsInPlay[0].rank)
 	}
-	else {
+	else { // at least one of the cards has been played before
 		var checkPlayedCard = currentDeck.indexOf(Number(cardsInPlay[1].id)) // check if most recent card is unplayed, if same card retain the later one
 		if (checkPlayedCard > -1) { 
 			cardsInPlay.shift(); // retain the unplayed card
@@ -143,7 +146,7 @@ var flipCard = function () {
 				cardsInPlay.pop(); // retain the unplayed card
 				console.log("Cards in play: " + cardsInPlay[0].rank);
 			}
-			else {
+			else { // both cards played before
 				cardsInPlay = [];
 				console.log("Cards in play: " + cardsInPlay);
 			}
@@ -191,4 +194,5 @@ var createBoard = function () {
 }
 
 var currentDeck = createBoard();
+var copyDeck = currentDeck; // create copy to reset deck when board is hidden
 console.log("Current deck:" + currentDeck);
