@@ -175,15 +175,15 @@ var flipCard = function () {
 			console.log("Cards in play: " + cardsInPlay[0].rank)
 		}
 		else { // at least one of the cards has been played before
-			var checkPlayedCard = currentDeck.indexOf(Number(cardsInPlay[1].id)) // check if most recent card is unplayed, if same card retain the later one
-			if (checkPlayedCard > -1) { 
-				cardsInPlay.shift(); // retain the unplayed card
+			var checkFreshCard = currentDeck.indexOf(Number(cardsInPlay[1].id)) // check if most recent card is unplayed, if same card retain the later one
+			if (checkFreshCard > -1) { 
+				cardsInPlay.shift(); // remove the played card OR same card was clicked twice
 				console.log("Cards in play: " + cardsInPlay[0].rank);
 			}
 			else {
-				checkPlayedCard = currentDeck.indexOf(Number(cardsInPlay[0].id))
-				if (checkPlayedCard > -1) { 
-					cardsInPlay.pop(); // retain the unplayed card
+				checkFreshCard = currentDeck.indexOf(Number(cardsInPlay[0].id))
+				if (checkFreshCard > -1) { 
+					cardsInPlay.pop(); // remove the played card
 					console.log("Cards in play: " + cardsInPlay[0].rank);
 				}
 				else { // both cards played before

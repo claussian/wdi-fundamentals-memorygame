@@ -118,7 +118,7 @@ var flipCard = function () {
 	this.setAttribute('src', cards[cardId].cardImage);
 	var flipCount = Number(this.getAttribute('face')) + 1; // track whether card has been flipped before
 	this.setAttribute('face',  flipCount);
-	// console.log("Flipcount on current card: " + flipCount);
+	console.log("Flipcount on current card: " + flipCount);
 	cardsInPlay.push({
 		rank: cards[cardId].rank,
 		id: cardId,
@@ -132,18 +132,19 @@ var flipCard = function () {
 	}
 	else if (cardsInPlay.length === 1) {
 		alertNeutral();
-		console.log("Cards in play: " + cardsInPlay[0].rank)
+		console.log("Cards in play: " + cardsInPlay[0].rank);
 	}
 	else { // at least one of the cards has been played before
-		var checkPlayedCard = currentDeck.indexOf(Number(cardsInPlay[1].id)) // check if most recent card is unplayed, if same card retain the later one
-		if (checkPlayedCard > -1) { 
-			cardsInPlay.shift(); // retain the unplayed card
+		// console.log("Current deck: " + currentDeck);
+		var checkFreshCard = currentDeck.indexOf(Number(cardsInPlay[1].id)) // check if most recent card is unplayed
+		if (checkFreshCard > -1) { 
+			cardsInPlay.shift(); // remove the played card OR same card was clicked twice
 			console.log("Cards in play: " + cardsInPlay[0].rank);
 		}
 		else {
-			checkPlayedCard = currentDeck.indexOf(Number(cardsInPlay[1].id))
-			if (checkPlayedCard > -1) { 
-				cardsInPlay.pop(); // retain the unplayed card
+			checkFreshCard = currentDeck.indexOf(Number(cardsInPlay[0].id))
+			if (checkFreshCard > -1) { 
+				cardsInPlay.pop(); // remove the played card
 				console.log("Cards in play: " + cardsInPlay[0].rank);
 			}
 			else { // both cards played before
