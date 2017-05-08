@@ -116,7 +116,7 @@ var checkForMatch = function (totalFlipCount) {
 			currentDeck.splice(playedCard, 1); // remove matched cards from current deck
 		}
 		if (wins === 4) {
-			alertBoard.style.backgroundColor = "#9A0000";
+			alertBoard.style.backgroundColor = "#9A27B0";
 			var messageWin = messageDisplay(alertBoard, 'h1', "You've won! Reset?");
 			alertBoard.appendChild(messageWin);
 			// alertBoard.innerHTML = "<h1>You've won! Reset?</h1>";
@@ -175,7 +175,7 @@ var flipCard = function () {
 			console.log("Cards in play: " + cardsInPlay[0].rank)
 		}
 		else { // at least one of the cards has been played before
-			var checkFreshCard = currentDeck.indexOf(Number(cardsInPlay[1].id)) // check if most recent card is unplayed, if same card retain the later one
+			var checkFreshCard = currentDeck.indexOf(Number(cardsInPlay[1].id)) // check if most recent card is unplayed
 			if (checkFreshCard > -1) { 
 				cardsInPlay.shift(); // remove the played card OR same card was clicked twice
 				console.log("Cards in play: " + cardsInPlay[0].rank);

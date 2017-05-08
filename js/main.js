@@ -48,6 +48,25 @@ var cardsInPlay = [];
 // Wins counter
 var wins = 0;
 
+//Function to display wins
+var scoreDisplay = function (wins) {
+	var scoreCounter = document.createElement('h2');
+	scoreCounter.setAttribute('class', "score");
+	scoreCounter.textContent = "Score: " + wins + "/4";
+	return scoreCounter;
+}
+
+// Function to change message on alert board
+var messageDisplay = function (alertBoard, elementType, content) {
+	var children = alertBoard.childNodes;
+	while (children.length > 0) {
+		alertBoard.removeChild(children[0]); // remove all existing nodes first
+	}
+	var message = document.createElement(elementType);
+	message.textContent = content;
+	return message;
+}
+
 // Flip back all cards if card pair in play do not match
 var hideBoard = function () {
 	var children = document.getElementsByTagName('img');
@@ -62,7 +81,11 @@ var hideBoard = function () {
 var alertNeutral = function () {
 	var alertBoard = document.getElementById('alert-board');
 	alertBoard.style.backgroundColor = "#6E7B8B";
-	alertBoard.innerHTML = "<h1>Flip a card</h1>";
+	// alertBoard.innerHTML = "<h1>Flip a card</h1>";
+	var messageNeutral = messageDisplay(alertBoard, 'h1', "Flip a card");
+	alertBoard.appendChild(messageNeutral);
+	var scoreCounter = scoreDisplay(wins);
+	alertBoard.appendChild(scoreCounter);
 }
 
 // Reset board
@@ -74,8 +97,8 @@ var resetBoard = function () {
 	currentDeck = createBoard();
 	copyDeck = currentDeck;
 	console.log("Current deck:" + currentDeck);
-	alertNeutral();
 	wins = 0;
+	alertNeutral();
 	cardsInPlay = [];
 }
 
@@ -90,23 +113,35 @@ var checkForMatch = function () {
 			currentDeck.splice(playedCard, 1); // remove matched cards from current deck
 		}
 		if (wins === 4) {
-			alertBoard.style.backgroundColor = "#9A0000";
-			alertBoard.innerHTML = "<h1>You've won! Reset?</h1>";
+			alertBoard.style.backgroundColor = "#9A27B0";
+			// alertBoard.innerHTML = "<h1>You've won! Reset?</h1>";
+			var messageWin = messageDisplay(alertBoard, 'h1', "You've won! Reset?");
+			alertBoard.appendChild(messageWin);
+			var scoreCounter = scoreDisplay(wins);
+			alertBoard.appendChild(scoreCounter);
 			alertBoard.addEventListener('click', resetBoard);
 			// document.getElementById('game-board').addEventListener('click', resetBoard);
 		}
 		else {
 			alertBoard.style.backgroundColor = "#F15B31";
-			alertBoard.innerHTML = "<h1>Match!</h1>";
+			// alertBoard.innerHTML = "<h1>Match!</h1>";
+			var messageMatch = messageDisplay(alertBoard, 'h1', "Match!");
+			alertBoard.appendChild(messageMatch);
+			var scoreCounter = scoreDisplay(wins);
+			alertBoard.appendChild(scoreCounter);
 		}
 		console.log("Score:" + wins)
 	}
 	else {
 		// alert("Sorry, try again.");
 		alertBoard.style.backgroundColor = "#00A6B3";
-		alertBoard.innerHTML = "<h1>Sorry, try again</h1>";
-		setTimeout(hideBoard, 500);
+		// alertBoard.innerHTML = "<h1>Sorry, try again</h1>";
+		var messageSorry = messageDisplay(alertBoard, 'h1', "Sorry, try again");
+		alertBoard.appendChild(messageSorry);
 		wins = 0;
+		var scoreCounter = scoreDisplay(wins);
+		alertBoard.appendChild(scoreCounter);
+		setTimeout(hideBoard, 500);
 		console.log("Score:" + wins)
 	}	
 }
